@@ -1,0 +1,1 @@
+Bitwig controller module to load other controller modules and faciliate a shared environment for the inter-controller-communication functionality
