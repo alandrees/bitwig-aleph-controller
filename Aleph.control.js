@@ -36,4 +36,28 @@ function init(){
     }
 }
 
-init();
+
+/***************/
+/* entry point */
+/***************/
+
+
+//This needs to be refined to work with different directories and the like//
+if(host.platformIsLinux)
+{
+    Aleph.scriptdir = '/opt/bitwig-studio/resources/controllers';
+    Aleph.usrdir    = '~/Bitwig Studio/Controller Scripts';
+}
+
+if(host.platformIsMac)
+{
+    Aleph.scriptdir = '/opt/bitwig-studio/resources/controllers';
+    Aleph.usrdir    = '~/Documents/Bitwig Studio/Controller Scripts';
+}
+
+if(host.platformIsWindows)
+{
+    Aleph.scriptdir = 'C:\Program Files\Bitwig Studio\resources/controllers';
+    Aleph.usrdir    = '%USER%/Documents\Bitwig Studio\Controller Scripts';
+}
+
