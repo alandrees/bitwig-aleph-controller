@@ -30,7 +30,7 @@ load('aleph_core.js');
  */
 
 function init(){
-    if(typeof Aleph !== undefined)
+    if(typeof Aleph !== 'undefined')
     {
 	Aleph.init();
     }
