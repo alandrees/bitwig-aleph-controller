@@ -10,12 +10,15 @@ loadAPI(1);
  */
 
 var Aleph = Aleph || {};
+var Aleph.scriptdir    = '';
+var Aleph.usrdirdir    = '';
 
 /************/
 /* requires */
 /************/
 
 load('aleph.configuration.js');
+host.defineController("loridcon", "Aleph", "0.0", "0D58C5F7-74A2-48AF-BB45-0479AB55F457");
 
 /*************/
 /* functions */
@@ -78,3 +81,4 @@ Aleph.load_controller_scripts = function(){
 	println(Aleph.controller_list[i]);
     }
 }
+
