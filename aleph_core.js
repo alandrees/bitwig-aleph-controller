@@ -1,4 +1,3 @@
-loadAPI(1);
 /**
  * Copyright 2014 Alan Drees
  *   
@@ -10,15 +9,20 @@ loadAPI(1);
  */
 
 var Aleph = Aleph || {};
-var Aleph.scriptdir    = '';
-var Aleph.usrdirdir    = '';
-
+Aleph.scriptdir    = '';
+Aleph.usrdirdir    = '';
+Aleph.name = "Aleph";
 /************/
 /* requires */
 /************/
 
-load('aleph.configuration.js');
-host.defineController("loridcon", "Aleph", "0.0", "0D58C5F7-74A2-48AF-BB45-0479AB55F457");
+load('aleph_configuration.js');
+
+for(i in Aleph.controller_list){
+    Aleph.name += "-" + Aleph.controller_list[i][0];
+}
+
+host.defineController("pirate-hour", Aleph.name, "0.0", "0D58C5F7-74A2-48AF-BB45-0479AB55F457");
 
 /*************/
 /* functions */
@@ -26,15 +30,17 @@ host.defineController("loridcon", "Aleph", "0.0", "0D58C5F7-74A2-48AF-BB45-0479A
 
 /**\fn Aleph.init
  * 
- * Bitwig init function.  Wrapped by a public init function defined below
+ * Bitwig init function.  Wrapped by a public init function defined in the Aleph.control.js entry point file.
  *
  * @param None
  * 
  * @returns None
  */
 
-Aleph.init = funciton(){
- 
+Aleph.init = function(){
+
+    Aleph.init_io();
+
     for(cb in init.callbacks)
     {
 	cb[0].call(cb[1]);
@@ -82,3 +88,43 @@ Aleph.load_controller_scripts = function(){
     }
 }
 
+
+/**\fn Aleph.is_valid_script
+ * 
+ * Checks if a script is a valid, existing script.  PLACEHOLDER UNTIL A RELIABLE METHOD TO DETERMINE THE EXISTANCE OF A SCRIPT CAN BE DETERMINED.
+ *
+ * @param script script to check for
+ *
+ * @returns Boolean true if the script exists and is executable (has a control.js entry point), false otherwise
+ */
+
+Aleph.is_valid_script = function(script){
+    return true;
+}
+ 
+  
+/**\fn Aleph.manage_io
+ * 
+ * Configure the requested number of inputs and outputs
+ *
+ * @param None
+ *
+ * @returns None
+ */
+
+
+Aleph.init_io = function(){
+    var num_ins = 0;
+    var num_outs = 0;
+    for(var script in Aleph.controller_list){
+	if(Aleph.is_valid_script(Aleph.controller_list[script]))
+	{
+	    num_ins += Aleph.controller_list[script][1] * Aleph.controller_list[script][3];
+	    num_outs += Aleph.controller_list[script][2] * Aleph.controller_list[script][3];
+	}
+    }
+
+    host.defineMidiPorts(num_ins, num_outs);
+    Aleph.defined_ins = num_ins;
+    Aleph.defined_outs = num_outs;
+}
